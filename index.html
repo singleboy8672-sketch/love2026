@@ -1,9 +1,227 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My First Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartLink • Dream Partner Creator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Dancing+Script:wght@700&family=Inter:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #fdf2f8, #f3e8ff); }
+        .heading { font-family: 'Playfair Display', serif; }
+        .romantic { font-family: 'Dancing Script', cursive; }
+    </style>
 </head>
-<body>
-    <h1>হ্যালো! এটা আমার GitHub Pages সাইট</h1>
+<body class="min-h-screen relative overflow-hidden">
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <div class="text-center mb-10">
+            <h1 class="heading text-6xl text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-600">HeartLink</h1>
+            <p class="romantic text-3xl text-rose-500">Create Your Dream Partner</p>
+        </div>
+
+        <!-- Step 1: Login + Preferences -->
+        <div id="step1" class="bg-white rounded-3xl shadow-xl p-10">
+            <h2 class="heading text-3xl text-center mb-8">Welcome! Let's Begin</h2>
+            
+            <div class="max-w-lg mx-auto space-y-8">
+                <!-- Language -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Preferred Language / ভাষা</label>
+                    <select id="language" class="w-full p-4 border-2 border-pink-200 rounded-2xl text-lg">
+                        <option value="en">English</option>
+                        <option value="bn">বাংলা (Bengali)</option>
+                        <option value="hi">हिंदी (Hindi)</option>
+                    </select>
+                </div>
+
+                <!-- Name -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Your Name *</label>
+                    <input id="userName" type="text" placeholder="Enter your name" 
+                           class="w-full px-6 py-4 border-2 border-pink-200 rounded-2xl focus:border-rose-500" onkeyup="validateStep1()">
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Your Email *</label>
+                    <input id="userEmail" type="email" placeholder="you@example.com" 
+                           class="w-full px-6 py-4 border-2 border-pink-200 rounded-2xl focus:border-rose-500" onkeyup="validateStep1()">
+                </div>
+
+                <!-- Age -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Your Age *</label>
+                    <input id="userAge" type="number" min="18" max="60" value="25" 
+                           class="w-full px-6 py-4 border-2 border-pink-200 rounded-2xl focus:border-rose-500" onkeyup="validateStep1()">
+                </div>
+
+                <!-- Gender -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Your Gender *</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="selectGender(this)" data-gender="male"
+                                class="gender-btn py-6 text-lg font-medium border-2 border-transparent rounded-3xl hover:border-blue-300">
+                            👨 Male
+                        </button>
+                        <button onclick="selectGender(this)" data-gender="female"
+                                class="gender-btn py-6 text-lg font-medium border-2 border-transparent rounded-3xl hover:border-pink-300">
+                            👩 Female
+                        </button>
+                    </div>
+                </div>
+
+                <button id="continueBtn" onclick="goToStep(2)" disabled
+                        class="w-full py-6 bg-gradient-to-r from-rose-500 to-pink-600 text-white text-xl font-semibold rounded-3xl">
+                    Continue & Manifest
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Customization -->
+        <div id="step2" class="hidden bg-white rounded-3xl shadow-xl">
+            <div class="flex border-b">
+                <button onclick="switchTab(0)" class="tab-btn active flex-1 py-5" id="tab0">Physical</button>
+                <button onclick="switchTab(1)" class="tab-btn flex-1 py-5" id="tab1">Face & Details</button>
+                <button onclick="switchTab(2)" class="tab-btn flex-1 py-5" id="tab2">Mind & Intimacy</button>
+            </div>
+
+            <!-- Tabs Content (same as before with Custom option) -->
+            <div id="content0" class="p-10 space-y-8">
+                <div>
+                    <label>Age of Partner</label>
+                    <input id="partnerAge" type="number" value="26" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
+                </div>
+                <div>
+                    <label>Body Type</label>
+                    <select id="bodyType" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
+                        <option value="">Select</option>
+                        <option value="Slim">Slim</option>
+                        <option value="Curvy">Curvy</option>
+                        <option value="Athletic">Athletic</option>
+                        <option value="Voluptuous">Voluptuous</option>
+                        <option value="Chubby">Chubby</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input id="bodyCustom" type="text" placeholder="Describe your desired body type" class="hidden w-full mt-3 p-4 border-2 border-pink-300 rounded-2xl">
+                </div>
+            </div>
+
+            <!-- Face Details Tab -->
+            <div id="content1" class="p-10 hidden space-y-8">
+                <!-- Face, Eyes, Nose, Lips etc. with custom options -->
+                <div>
+                    <label>Eyes</label>
+                    <select id="eyes" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
+                        <option value="">Select</option>
+                        <option value="Big Brown">Big Brown</option>
+                        <option value="Blue">Blue</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input id="eyesCustom" type="text" placeholder="Describe eyes" class="hidden w-full mt-3 p-4 border-2 border-pink-300 rounded-2xl">
+                </div>
+            </div>
+
+            <!-- Mind & Intimacy -->
+            <div id="content2" class="p-10 hidden space-y-8">
+                <div>
+                    <label>Romantic Level</label>
+                    <select id="romantic" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
+                        <option value="">Select</option>
+                        <option value="Very Romantic">Very Romantic</option>
+                        <option value="Passionate">Passionate</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input id="romanticCustom" type="text" placeholder="Describe" class="hidden w-full mt-3 p-4 border-2 border-pink-300 rounded-2xl">
+                </div>
+                <div>
+                    <label>Intimacy Style</label>
+                    <select id="intimacy" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
+                        <option value="">Select</option>
+                        <option value="Affectionate & Sensual">Affectionate & Sensual</option>
+                        <option value="Wild & Passionate">Wild & Passionate</option>
+                        <option value="Gentle">Gentle</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input id="intimacyCustom" type="text" placeholder="Describe intimacy preference" class="hidden w-full mt-3 p-4 border-2 border-pink-300 rounded-2xl">
+                </div>
+                <textarea id="customNote" rows="4" class="w-full p-5 border-2 border-pink-200 rounded-3xl" placeholder="Any other wishes..."></textarea>
+            </div>
+
+            <div class="p-8 border-t flex justify-between">
+                <button onclick="goToStep(1)" class="px-8 py-4 text-gray-600">← Back</button>
+                <button onclick="submitDream()" class="px-12 py-5 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-semibold rounded-3xl">Manifest My Partner</button>
+            </div>
+        </div>
+
+        <!-- Result -->
+        <div id="step3" class="hidden bg-white rounded-3xl shadow-xl p-12 text-center">
+            <div class="text-7xl mb-6">💖🌹💖</div>
+            <h2 class="heading text-4xl text-rose-600">Your Dream Partner is Manifested!</h2>
+            <div id="summary" class="mt-10 bg-pink-50 p-8 rounded-3xl text-left"></div>
+            <button onclick="downloadPDF()" class="mt-10 px-10 py-5 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-3xl">Download PDF</button>
+        </div>
+    </div>
+
+    <script>
+        let userGender = "";
+
+        function selectGender(btn) {
+            document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('border-rose-500', 'bg-rose-50'));
+            btn.classList.add('border-rose-500', 'bg-rose-50');
+            userGender = btn.dataset.gender;
+            validateStep1();
+        }
+
+        function validateStep1() {
+            const name = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail').value.trim();
+            const age = document.getElementById('userAge').value;
+            const genderSelected = userGender !== "";
+            document.getElementById('continueBtn').disabled = !(name && email && age && genderSelected);
+        }
+
+        function goToStep(step) {
+            document.querySelectorAll('#step1,#step2,#step3').forEach(s => s.classList.add('hidden'));
+            document.getElementById('step' + step).classList.remove('hidden');
+        }
+
+        function switchTab(n) {
+            document.querySelectorAll('#content0,#content1,#content2').forEach(c => c.classList.add('hidden'));
+            document.getElementById('content' + n).classList.remove('hidden');
+        }
+
+        function toggleCustom(select) {
+            const customId = select.id + 'Custom';
+            const customField = document.getElementById(customId);
+            if (customField) customField.classList.toggle('hidden', select.value !== 'custom');
+        }
+
+        function submitDream() {
+            goToStep(3);
+            const partnerType = userGender === 'male' ? 'Girlfriend' : 'Boyfriend';
+            document.getElementById('summary').innerHTML = `
+                <h3 class="text-2xl font-bold mb-6">Your Perfect ${partnerType}</h3>
+                <p><strong>Your Name:</strong> ${document.getElementById('userName').value}</p>
+                <p><strong>Your Gender:</strong> ${userGender.toUpperCase()}</p>
+                <p><strong>Partner Type:</strong> ${partnerType}</p>
+                <p class="mt-6 italic">"${document.getElementById('customNote').value || 'A beautiful connection has been created 💕'}"</p>
+            `;
+        }
+
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("Dream Partner Profile", 20, 30);
+            doc.save("Dream_Partner.pdf");
+        }
+
+        window.onload = () => {
+            goToStep(1);
+            switchTab(0);
+        };
+    </script>
 </body>
 </html>
