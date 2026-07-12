@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HeartLink • স্বপ্নের সঙ্গী</title>
+    <title>HeartLink • Dream Partner Creator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -15,201 +15,197 @@
         .romantic { font-family: 'Dancing Script', cursive; }
 
         .love-border {
-            position: relative;
             border: 12px solid transparent;
             background: linear-gradient(white, white) padding-box,
-                        linear-gradient(90deg, #e11d48, #db2777, #c026d3, #e11d48) border-box;
-            animation: borderRainbow 4s linear infinite;
+                        linear-gradient(90deg, #e11d48, #c026d3, #db2777) border-box;
+            animation: borderGlow 4s linear infinite;
         }
-
-        @keyframes borderRainbow {
-            0% { border-image-source: linear-gradient(90deg, #e11d48, #db2777); }
-            50% { border-image-source: linear-gradient(90deg, #c026d3, #e11d48, #db2777); }
-            100% { border-image-source: linear-gradient(90deg, #e11d48, #db2777); }
-        }
-
-        .rainbow-bg {
-            background: linear-gradient(135deg, 
-                #ff9a9e 0%, #fad0c4 20%, 
-                #fad0c4 40%, #a1c4fd 60%, 
-                #c2e9fb 80%, #ff9a9e 100%);
-            animation: rainbowShift 8s linear infinite;
-        }
-
-        @keyframes rainbowShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes borderGlow {
+            0%, 100% { border-color: #e11d48; }
+            50% { border-color: #c026d3; }
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
 
-    <div class="max-w-4xl mx-auto px-4 py-8">
+<div class="max-w-4xl mx-auto px-4 py-8">
 
-        <!-- Step 1: Login - Rainbow -->
-        <div id="step1" class="love-border rainbow-bg rounded-3xl shadow-2xl p-12 text-white">
-            <h1 class="heading text-6xl text-center drop-shadow-lg">HeartLink</h1>
-            <p class="romantic text-4xl text-center mt-3 drop-shadow">স্বপ্নের সঙ্গী তৈরি করুন</p>
+    <!-- Step 1: Login -->
+    <div id="step1" class="love-border bg-white rounded-3xl shadow-2xl p-10">
+        <h1 class="heading text-5xl text-center text-rose-600">HeartLink</h1>
+        <p class="romantic text-center text-3xl text-rose-500 mt-2">Create Your Dream Partner</p>
 
-            <div class="max-w-md mx-auto mt-12 space-y-6">
-                <select id="language" onchange="changeLanguage()" class="w-full p-5 rounded-2xl text-lg border border-white/30 bg-white/20 text-white">
-                    <option value="en">English</option>
-                    <option value="bn">বাংলা</option>
-                    <option value="hi">हिंदी</option>
-                </select>
+        <div class="max-w-md mx-auto mt-10 space-y-6">
+            <label class="block text-sm font-medium">Preferred Language</label>
+            <select id="language" onchange="changeLanguage()" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
+                <option value="en" selected>English</option>
+                <option value="bn">বাংলা</option>
+                <option value="hi">हिंदी</option>
+            </select>
 
-                <input id="userName" type="text" placeholder="আপনার নাম *" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
-                <input id="userEmail" type="email" placeholder="আপনার ইমেইল *" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
-                <input id="userAge" type="number" min="18" placeholder="আপনার বয়স *" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
+            <label class="block text-sm font-medium">Your Full Name <span class="text-red-500">*</span></label>
+            <input id="userName" type="text" aria-label="Your name" class="w-full p-5 border-2 border-pink-200 rounded-2xl" placeholder="Enter your name">
 
-                <div class="grid grid-cols-2 gap-4">
-                    <button onclick="selectGender(this,'male')" class="gender-btn p-8 rounded-3xl bg-white/90 text-gray-900 text-xl">👨 পুরুষ</button>
-                    <button onclick="selectGender(this,'female')" class="gender-btn p-8 rounded-3xl bg-white/90 text-gray-900 text-xl">👩 মহিলা</button>
-                </div>
+            <label class="block text-sm font-medium">Your Email <span class="text-red-500">*</span></label>
+            <input id="userEmail" type="email" aria-label="Your email" class="w-full p-5 border-2 border-pink-200 rounded-2xl" placeholder="you@example.com">
 
-                <button id="next1" onclick="goToStep(2)" disabled class="w-full py-7 bg-white text-rose-600 text-2xl font-bold rounded-3xl">পরবর্তী →</button>
+            <label class="block text-sm font-medium">Your Age <span class="text-red-500">*</span></label>
+            <input id="userAge" type="number" min="18" aria-label="Your age" class="w-full p-5 border-2 border-pink-200 rounded-2xl" placeholder="Your age">
+
+            <label class="block text-sm font-medium">Your Gender <span class="text-red-500">*</span></label>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="selectGender(this,'male')" class="gender-btn p-6 border-2 rounded-3xl hover:border-blue-400" aria-label="Male">👨 Male</button>
+                <button onclick="selectGender(this,'female')" class="gender-btn p-6 border-2 rounded-3xl hover:border-pink-400" aria-label="Female">👩 Female</button>
             </div>
-        </div>
 
-        <!-- Step 2: Physical - Deep Rose -->
-        <div id="step2" class="love-border hidden bg-gradient-to-br from-rose-600 to-pink-700 text-white rounded-3xl shadow-2xl p-12">
-            <h2 class="heading text-4xl text-center mb-10">শারীরিক বৈশিষ্ট্য</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <label class="block mb-2 text-lg">সঙ্গীর বয়স</label>
-                    <input id="pAge" type="number" class="w-full p-5 rounded-2xl bg-white/20 border border-white/30 text-white" placeholder="বয়স লিখুন">
-                </div>
-                <div>
-                    <label class="block mb-2 text-lg">উচ্চতা</label>
-                    <select id="height" class="w-full p-5 rounded-2xl bg-white/20 border border-white/30 text-white">
-                        <option value="">নির্বাচন করুন</option>
-                        <option value="খাটো">খাটো</option>
-                        <option value="মাঝারি">মাঝারি</option>
-                        <option value="লম্বা">লম্বা</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block mb-2 text-lg">শরীরের ধরন</label>
-                    <select id="body" class="w-full p-5 rounded-2xl bg-white/20 border border-white/30 text-white">
-                        <option value="">নির্বাচন করুন</option>
-                        <option value="রোগা">রোগা / সরু</option>
-                        <option value="মোটা">মোটা</option>
-                        <option value="অ্যাথলেটিক">অ্যাথলেটিক</option>
-                        <option value="কার্ভি">কার্ভি</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block mb-2 text-lg">গায়ের রং</label>
-                    <select id="skin" class="w-full p-5 rounded-2xl bg-white/20 border border-white/30 text-white">
-                        <option value="">নির্বাচন করুন</option>
-                        <option value="ফর্সা">ফর্সা</option>
-                        <option value="মাঝারি">মাঝারি</option>
-                        <option value="কালো">কালো</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex justify-between mt-12">
-                <button onclick="goToStep(1)" class="px-10 py-4 bg-white/20 rounded-2xl">পিছনে</button>
-                <button onclick="goToStep(3)" class="px-14 py-4 bg-white text-rose-600 font-bold rounded-2xl">পরবর্তী</button>
-            </div>
-        </div>
-
-        <!-- Step 3: Face & Hair - Deep Purple -->
-        <div id="step3" class="love-border hidden bg-gradient-to-br from-purple-700 to-violet-700 text-white rounded-3xl shadow-2xl p-12">
-            <h2 class="heading text-4xl text-center mb-10">মুখমণ্ডল ও চুল</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <label class="block mb-2 text-lg">চোখ</label>
-                    <select id="eyes" class="w-full p-5 rounded-2xl bg-white/20 border border-white/30 text-white">
-                        <option value="">নির্বাচন করুন</option>
-                        <option value="বড় কালো">বড় কালো</option>
-                        <option value="নীল">নীল</option>
-                        <option value="সবুজ">সবুজ</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block mb-2 text-lg">ঠোঁট</label>
-                    <select id="lips" class="w-full p-5 rounded-2xl bg-white/20 border border-white/30 text-white">
-                        <option value="">নির্বাচন করুন</option>
-                        <option value="মোটা">মোটা</option>
-                        <option value="সুন্দর পাতলা">সুন্দর পাতলা</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block mb-2 text-lg">চুলের ধরন</label>
-                    <select id="hair" class="w-full p-5 rounded-2xl bg-white/20 border border-white/30 text-white">
-                        <option value="">নির্বাচন করুন</option>
-                        <option value="লম্বা ঢেউ খেলানো">লম্বা ঢেউ খেলানো</option>
-                        <option value="কোঁকড়া">কোঁকড়া</option>
-                        <option value="সোজা">সোজা</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex justify-between mt-12">
-                <button onclick="goToStep(2)" class="px-10 py-4 bg-white/20 rounded-2xl">পিছনে</button>
-                <button onclick="goToStep(4)" class="px-14 py-4 bg-white text-purple-700 font-bold rounded-2xl">পরবর্তী</button>
-            </div>
-        </div>
-
-        <!-- Step 4: Mind & Submit - Deep Pink -->
-        <div id="step4" class="love-border hidden bg-gradient-to-br from-pink-600 to-rose-600 text-white rounded-3xl shadow-2xl p-12">
-            <h2 class="heading text-4xl text-center mb-10">মন ও আচরণ</h2>
-            <textarea id="customNote" rows="6" class="w-full p-6 rounded-3xl bg-white/20 border border-white/30 text-white" placeholder="আর কোনো বিশেষ ইচ্ছা লিখুন..."></textarea>
-            
-            <button onclick="submitForm()" class="w-full mt-12 py-7 bg-white text-rose-600 text-2xl font-bold rounded-3xl">সাবমিট করুন & স্বপ্ন পূরণ করুন</button>
-        </div>
-
-        <!-- Result -->
-        <div id="result" class="hidden bg-white rounded-3xl shadow-2xl p-12 text-center">
-            <h2 class="heading text-5xl text-rose-600">আপনার স্বপ্নের সঙ্গী প্রস্তুত!</h2>
-            <div id="summary" class="mt-10 text-left bg-pink-50 p-8 rounded-3xl"></div>
-            <button onclick="downloadPDF()" class="mt-10 px-12 py-6 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-3xl text-xl">PDF ডাউনলোড করুন</button>
+            <button id="next1" onclick="goToStep(2)" disabled class="w-full py-6 bg-gradient-to-r from-rose-500 to-purple-600 text-white text-xl font-semibold rounded-3xl">Continue</button>
         </div>
     </div>
 
-    <script>
-        let userGender = "";
+    <!-- Step 2 -->
+    <div id="step2" class="love-border hidden bg-gradient-to-br from-rose-600 to-pink-700 text-white rounded-3xl shadow-2xl p-10">
+        <h2 class="heading text-4xl text-center mb-8">Physical Attributes</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div>
+                <label class="block mb-2">Partner's Age</label>
+                <input id="pAge" type="number" class="w-full p-4 rounded-2xl bg-white/20 border border-white/30 text-white">
+            </div>
+            <div>
+                <label class="block mb-2">Height</label>
+                <select id="height" class="w-full p-4 rounded-2xl bg-white/20 border border-white/30 text-white">
+                    <option value="">Select Height</option>
+                    <option value="Short">Short</option>
+                    <option value="Average">Average</option>
+                    <option value="Tall">Tall</option>
+                </select>
+            </div>
+            <div>
+                <label class="block mb-2">Body Type</label>
+                <select id="body" class="w-full p-4 rounded-2xl bg-white/20 border border-white/30 text-white">
+                    <option value="">Select Body Type</option>
+                    <option value="Slim">Slim</option>
+                    <option value="Curvy">Curvy</option>
+                    <option value="Athletic">Athletic</option>
+                    <option value="Thick">Thick</option>
+                </select>
+            </div>
+        </div>
+        <div class="flex justify-between mt-10">
+            <button onclick="goToStep(1)" class="px-8 py-4 bg-white/20 rounded-2xl">Back</button>
+            <button onclick="goToStep(3)" class="px-12 py-4 bg-white text-rose-600 font-bold rounded-2xl">Next</button>
+        </div>
+    </div>
 
-        function selectGender(btn, gender) {
-            document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('ring-4', 'ring-white'));
-            btn.classList.add('ring-4', 'ring-white');
-            userGender = gender;
-            validateStep1();
+    <!-- Step 3 -->
+    <div id="step3" class="love-border hidden bg-gradient-to-br from-purple-700 to-violet-700 text-white rounded-3xl shadow-2xl p-10">
+        <h2 class="heading text-4xl text-center mb-8">Face & Hair</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div>
+                <label class="block mb-2">Eyes</label>
+                <select id="eyes" class="w-full p-4 rounded-2xl bg-white/20 border border-white/30 text-white">
+                    <option value="">Select</option>
+                    <option value="Brown">Brown</option>
+                    <option value="Blue">Blue</option>
+                </select>
+            </div>
+            <div>
+                <label class="block mb-2">Hair Style</label>
+                <select id="hair" class="w-full p-4 rounded-2xl bg-white/20 border border-white/30 text-white">
+                    <option value="">Select</option>
+                    <option value="Long Wavy">Long Wavy</option>
+                    <option value="Curly">Curly</option>
+                </select>
+            </div>
+        </div>
+        <div class="flex justify-between mt-10">
+            <button onclick="goToStep(2)" class="px-8 py-4 bg-white/20 rounded-2xl">Back</button>
+            <button onclick="goToStep(4)" class="px-12 py-4 bg-white text-purple-700 font-bold rounded-2xl">Next</button>
+        </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div id="step4" class="love-border hidden bg-gradient-to-br from-pink-600 to-rose-600 text-white rounded-3xl shadow-2xl p-10">
+        <h2 class="heading text-4xl text-center mb-8">Personality & Intimacy</h2>
+        <textarea id="customNote" rows="5" class="w-full p-6 rounded-3xl bg-white/20 border border-white/30 text-white" placeholder="Any special wishes..."></textarea>
+        <button onclick="submitForm()" class="w-full mt-10 py-6 bg-white text-rose-600 text-xl font-bold rounded-3xl">Submit & Manifest</button>
+    </div>
+
+    <!-- Result -->
+    <div id="result" class="hidden bg-white rounded-3xl shadow-2xl p-12 text-center">
+        <h2 class="heading text-5xl text-rose-600">Your Dream Partner is Ready!</h2>
+        <div id="summary" class="mt-10"></div>
+        <button onclick="downloadPDF()" class="mt-10 px-12 py-6 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-3xl">Download PDF</button>
+    </div>
+</div>
+
+<script>
+    let userGender = "";
+    let currentLang = "en";
+
+    const translations = {
+        en: {
+            title: "HeartLink",
+            subtitle: "Create Your Dream Partner",
+            step2: "Physical Attributes",
+            step3: "Face & Hair",
+            step4: "Personality & Intimacy",
+            result: "Your Dream Partner is Ready!"
+        },
+        bn: {
+            title: "হার্টলিঙ্ক",
+            subtitle: "স্বপ্নের সঙ্গী তৈরি করুন",
+            step2: "শারীরিক বৈশিষ্ট্য",
+            step3: "মুখ ও চুল",
+            step4: "মন ও আচরণ",
+            result: "আপনার স্বপ্নের সঙ্গী প্রস্তুত!"
         }
+    };
 
-        function validateStep1() {
-            const valid = document.getElementById('userName').value && 
-                          document.getElementById('userEmail').value && 
-                          document.getElementById('userAge').value && userGender;
-            document.getElementById('next1').disabled = !valid;
-        }
+    function changeLanguage() {
+        currentLang = document.getElementById('language').value;
+        const t = translations[currentLang] || translations.en;
+        // Update visible headings
+        document.querySelectorAll('h2').forEach(h => {
+            if (h.textContent.includes("Physical") || h.textContent.includes("শারীরিক")) h.textContent = t.step2;
+            // Add more if needed
+        });
+    }
 
-        function goToStep(step) {
-            document.querySelectorAll('#step1,#step2,#step3,#step4,#result').forEach(el => el.classList.add('hidden'));
-            document.getElementById('step' + step).classList.remove('hidden');
-        }
+    function selectGender(btn, gender) {
+        document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('ring-4', 'ring-white'));
+        btn.classList.add('ring-4', 'ring-white');
+        userGender = gender;
+        validateStep1();
+    }
 
-        function submitForm() {
-            document.getElementById('step4').classList.add('hidden');
-            document.getElementById('result').classList.remove('hidden');
-            
-            document.getElementById('summary').innerHTML = `
-                <p class="text-2xl font-semibold">নাম: ${document.getElementById('userName').value}</p>
-                <p>শরীর: ${document.getElementById('body').value || 'নির্বাচিত হয়নি'}</p>
-                <p>চুল: ${document.getElementById('hair').value || 'নির্বাচিত হয়নি'}</p>
-                <p class="mt-6">ঠিকানা: ১৪২ ভালোবাসা লেন, হার্টভিল</p>
-            `;
-        }
+    function validateStep1() {
+        const valid = document.getElementById('userName').value && 
+                      document.getElementById('userEmail').value && 
+                      document.getElementById('userAge').value && userGender;
+        document.getElementById('next1').disabled = !valid;
+    }
 
-        function downloadPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.text("স্বপ্নের সঙ্গী", 20, 30);
-            doc.save("স্বপ্নের_সঙ্গী.pdf");
-        }
+    function goToStep(step) {
+        document.querySelectorAll('#step1,#step2,#step3,#step4,#result').forEach(el => el.classList.add('hidden'));
+        document.getElementById('step' + step).classList.remove('hidden');
+    }
 
-        window.onload = () => goToStep(1);
-    </script>
+    function submitForm() {
+        document.getElementById('step4').classList.add('hidden');
+        document.getElementById('result').classList.remove('hidden');
+        document.getElementById('summary').innerHTML = `<p class="text-xl">Thank you! Your dream partner has been created with love 💕</p>`;
+    }
+
+    function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text("Dream Partner Profile", 20, 30);
+        doc.save("Dream_Partner.pdf");
+    }
+
+    window.onload = () => {
+        goToStep(1);
+    };
+</script>
 </body>
 </html>
