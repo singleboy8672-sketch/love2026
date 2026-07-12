@@ -9,21 +9,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Dancing+Script:wght@700&family=Inter:wght@400;500;600&display=swap');
-        
         body { font-family: 'Inter', sans-serif; }
         .heading { font-family: 'Playfair Display', serif; }
         .romantic { font-family: 'Dancing Script', cursive; }
-
-        .rainbow-border {
-            border: 16px solid transparent;
+        .love-border {
+            border: 14px solid transparent;
             background: linear-gradient(white, white) padding-box,
-                        linear-gradient(90deg, #e11d48, #c026d3, #db2777, #e11d48) border-box;
-            animation: rainbowBorder 4s linear infinite;
+                        linear-gradient(45deg, #e11d48, #c026d3, #db2777) border-box;
+            animation: borderGlow 3s linear infinite;
         }
-        @keyframes rainbowBorder {
-            0% { border-image-source: linear-gradient(90deg, #e11d48, #db2777); }
-            50% { border-image-source: linear-gradient(90deg, #c026d3, #e11d48); }
-            100% { border-image-source: linear-gradient(90deg, #e11d48, #db2777); }
+        @keyframes borderGlow {
+            0%,100% { border-color: #e11d48; }
+            50% { border-color: #c026d3; }
         }
     </style>
 </head>
@@ -31,87 +28,127 @@
 
 <div class="max-w-4xl mx-auto px-4 py-8">
 
-    <!-- Step 1: Login -->
-    <div id="step1" class="rainbow-border bg-white rounded-3xl shadow-2xl p-12">
-        <div class="text-center mb-10">
-            <h1 class="heading text-6xl text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-purple-500 to-pink-500">HeartLink</h1>
-            <p class="romantic text-4xl text-rose-600 mt-3">Create Your Dream Partner</p>
-        </div>
+    <!-- Step 1 -->
+    <div id="step1" class="love-border rainbow-bg rounded-3xl shadow-2xl p-12 text-white">
+        <h1 class="heading text-6xl text-center">HeartLink</h1>
+        <p class="romantic text-4xl text-center mt-4">Create Your Dream Partner</p>
 
-        <div class="max-w-md mx-auto space-y-6">
-            <div>
-                <label class="block text-sm font-medium mb-2">Preferred Language</label>
-                <select id="language" class="w-full p-5 border-2 border-pink-200 rounded-2xl focus:border-rose-500">
-                    <option value="en" selected>English</option>
-                    <option value="bn">বাংলা</option>
-                    <option value="hi">हिंदी</option>
-                </select>
-            </div>
+        <div class="max-w-lg mx-auto mt-12 space-y-6">
+            <select id="language" class="w-full p-4 rounded-2xl bg-white/30 border border-white/50 text-white">
+                <option value="en" selected>English</option>
+                <option value="bn">বাংলা</option>
+                <option value="hi">हिंदी</option>
+            </select>
 
-            <div>
-                <label class="block text-sm font-medium mb-2">Your Full Name <span class="text-red-500">*</span></label>
-                <input id="userName" type="text" oninput="validateLogin()" class="w-full p-5 border-2 border-pink-200 rounded-2xl focus:border-rose-500" placeholder="Enter your name">
-            </div>
+            <input id="userName" type="text" placeholder="Your Full Name *" onkeyup="validateStep1()" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
+            <input id="userEmail" type="email" placeholder="Your Email *" onkeyup="validateStep1()" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
+            <input id="userAge" type="number" min="18" placeholder="Your Age *" onkeyup="validateStep1()" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
 
-            <div>
-                <label class="block text-sm font-medium mb-2">Your Email <span class="text-red-500">*</span></label>
-                <input id="userEmail" type="email" oninput="validateLogin()" class="w-full p-5 border-2 border-pink-200 rounded-2xl focus:border-rose-500" placeholder="you@example.com">
-            </div>
+            <select id="userGender" onchange="validateStep1()" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
 
-            <div>
-                <label class="block text-sm font-medium mb-2">Your Age <span class="text-red-500">*</span></label>
-                <input id="userAge" type="number" min="18" oninput="validateLogin()" class="w-full p-5 border-2 border-pink-200 rounded-2xl focus:border-rose-500" placeholder="Your age">
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium mb-2">Your Gender <span class="text-red-500">*</span></label>
-                <select id="userGender" onchange="validateLogin()" class="w-full p-5 border-2 border-pink-200 rounded-2xl focus:border-rose-500">
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-            </div>
-
-            <button id="next1" onclick="goToStep(2)" disabled 
-                    class="w-full py-7 bg-gradient-to-r from-rose-500 to-purple-600 text-white text-2xl font-bold rounded-3xl">
-                Continue
-            </button>
+            <button id="next1" onclick="goToStep(2)" disabled class="w-full py-7 bg-white text-rose-600 text-2xl font-bold rounded-3xl">Continue</button>
         </div>
     </div>
 
-    <!-- অন্যান্য স্টেপস (সংক্ষিপ্ত) -->
+    <!-- Step 2 -->
     <div id="step2" class="love-border hidden bg-gradient-to-br from-rose-700 to-pink-700 text-white rounded-3xl shadow-2xl p-12">
         <h2 class="heading text-4xl text-center mb-10">Physical Attributes</h2>
-        <!-- আগের মতো সব অপশন আছে -->
+        <div class="grid md:grid-cols-2 gap-8">
+            <div><label>Partner Age *</label><input id="pAge" type="number" min="18" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"></div>
+            <div><label>Height *</label><select id="height" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Short</option><option>Average</option><option>Tall</option></select></div>
+            <div><label>Body Type *</label><select id="body" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Slim</option><option>Curvy</option><option>Athletic</option><option>Thick</option></select></div>
+            <div><label>Skin Tone</label><select id="skin" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Fair</option><option>Medium</option><option>Deep</option></select></div>
+        </div>
         <div class="flex justify-between mt-12">
             <button onclick="goToStep(1)" class="px-10 py-4 bg-white/30 rounded-2xl">Back</button>
-            <button onclick="goToStep(3)" class="px-14 py-4 bg-white text-rose-700 font-bold rounded-2xl">Next</button>
+            <button onclick="validateAndGo(2,3)" class="px-14 py-4 bg-white text-rose-700 font-bold rounded-2xl">Next</button>
         </div>
     </div>
 
-    <!-- Step 3, Step 4 এবং Result আগের মতো রাখা যেতে পারে -->
+    <!-- Step 3 -->
+    <div id="step3" class="love-border hidden bg-gradient-to-br from-purple-700 to-violet-700 text-white rounded-3xl shadow-2xl p-12">
+        <h2 class="heading text-4xl text-center mb-10">Face & Hair</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div><label>Eyes *</label><select id="eyes" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Brown</option><option>Blue</option><option>Green</option></select></div>
+            <div><label>Lips *</label><select id="lips" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Full</option><option>Soft</option></select></div>
+            <div><label>Hair Style *</label><select id="hair" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Long Wavy</option><option>Curly</option><option>Straight</option></select></div>
+        </div>
+        <div class="flex justify-between mt-12">
+            <button onclick="goToStep(2)" class="px-10 py-4 bg-white/30 rounded-2xl">Back</button>
+            <button onclick="validateAndGo(3,4)" class="px-14 py-4 bg-white text-purple-700 font-bold rounded-2xl">Next</button>
+        </div>
+    </div>
 
+    <!-- Step 4 -->
+    <div id="step4" class="love-border hidden bg-gradient-to-br from-pink-600 to-rose-600 text-white rounded-3xl shadow-2xl p-12">
+        <h2 class="heading text-4xl text-center mb-10">Personality & Intimacy</h2>
+        <textarea id="customNote" rows="5" class="w-full p-6 rounded-3xl bg-white/20 border border-white/40 text-white" placeholder="Any special wishes..."></textarea>
+        <button onclick="validateAndSubmit()" class="w-full mt-12 py-7 bg-white text-rose-600 text-2xl font-bold rounded-3xl">Manifest My Partner</button>
+    </div>
+
+    <!-- Result -->
     <div id="result" class="hidden bg-white rounded-3xl shadow-2xl p-12 text-center">
         <h2 class="heading text-5xl text-rose-600">Your Dream Partner is Ready!</h2>
-        <div id="summary" class="mt-10 bg-pink-50 p-8 rounded-3xl"></div>
+        <div id="summary" class="mt-10 bg-pink-50 p-8 rounded-3xl text-left"></div>
         <button onclick="downloadPDF()" class="mt-10 px-12 py-6 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-3xl">Download PDF</button>
     </div>
 </div>
 
 <script>
-    function validateLogin() {
+    function validateStep1() {
         const name = document.getElementById('userName').value.trim();
         const email = document.getElementById('userEmail').value.trim();
         const age = document.getElementById('userAge').value;
         const gender = document.getElementById('userGender').value;
+        document.getElementById('next1').disabled = !(name && email && age && gender);
+    }
 
-        const isValid = name.length > 1 && email.includes('@') && age && gender;
-        document.getElementById('next1').disabled = !isValid;
+    function validateStep(step) {
+        if (step === 2) {
+            if (!document.getElementById('pAge').value || !document.getElementById('height').value || !document.getElementById('body').value) {
+                alert("Please fill all required fields in Physical Attributes!");
+                return false;
+            }
+        }
+        if (step === 3) {
+            if (!document.getElementById('eyes').value || !document.getElementById('lips').value || !document.getElementById('hair').value) {
+                alert("Please fill all required fields in Face & Hair!");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function validateAndGo(current, next) {
+        if (validateStep(current)) {
+            goToStep(next);
+        }
+    }
+
+    function validateAndSubmit() {
+        submitForm();
     }
 
     function goToStep(step) {
         document.querySelectorAll('#step1,#step2,#step3,#step4,#result').forEach(el => el.classList.add('hidden'));
         document.getElementById('step' + step).classList.remove('hidden');
+    }
+
+    function submitForm() {
+        document.getElementById('step4').classList.add('hidden');
+        document.getElementById('result').classList.remove('hidden');
+        document.getElementById('summary').innerHTML = `
+            <h3 class="text-2xl font-bold mb-6">Your Dream Partner Summary</h3>
+            <p><strong>Name:</strong> ${document.getElementById('userName').value}</p>
+            <p><strong>Partner Age:</strong> ${document.getElementById('pAge').value || 'Not specified'}</p>
+            <p><strong>Body:</strong> ${document.getElementById('body').value}</p>
+            <p><strong>Eyes:</strong> ${document.getElementById('eyes').value}</p>
+            <p><strong>Hair:</strong> ${document.getElementById('hair').value}</p>
+        `;
     }
 
     function downloadPDF() {
@@ -121,9 +158,7 @@
         doc.save("Dream_Partner.pdf");
     }
 
-    // Initial load
     window.onload = () => {
-        // Ensure button is disabled at start
         document.getElementById('next1').disabled = true;
     };
 </script>
