@@ -3,263 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HeartLink • Dream Partner Creator 2026</title>
+    <title>HeartLink • Dream Partner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Dancing+Script:wght@700&family=Inter:wght@400;500;600&display=swap');
-        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #fdf2f8, #f3e8ff); }
+        body { font-family: 'Inter', sans-serif; }
         .heading { font-family: 'Playfair Display', serif; }
         .romantic { font-family: 'Dancing Script', cursive; }
+        .love-border {
+            border: 8px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, #e11d48, #c026d3, #db2777) border-box;
+            animation: borderGlow 3s linear infinite;
+        }
+        @keyframes borderGlow { 0%,100% { border-color: #e11d48; } 50% { border-color: #c026d3; } }
     </style>
 </head>
-<body class="min-h-screen relative">
+<body class="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-rose-50">
 
-    <div class="max-w-5xl mx-auto px-4 py-8">
-        <div class="text-center mb-10">
-            <h1 class="heading text-6xl text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-pink-600">HeartLink</h1>
-            <p class="romantic text-3xl text-rose-500">Build Your Dream Partner</p>
-        </div>
+<div class="max-w-4xl mx-auto px-4 py-8">
 
-        <!-- Step 1: Login -->
-        <div id="step1" class="bg-white rounded-3xl shadow-2xl p-10">
-            <h2 class="heading text-3xl text-center mb-8">Let's Start Your Journey</h2>
-            <div class="max-w-lg mx-auto grid grid-cols-1 gap-6">
-                <select id="language" class="p-4 border-2 border-pink-200 rounded-2xl">
-                    <option value="en">English</option>
-                    <option value="bn">বাংলা</option>
-                    <option value="hi">हिंदी</option>
-                </select>
+    <!-- Step 1 -->
+    <div id="step1" class="love-border bg-white rounded-3xl shadow-2xl p-10">
+        <h1 class="heading text-5xl text-center bg-gradient-to-r from-rose-500 to-purple-600 bg-clip-text text-transparent" id="title">HeartLink</h1>
+        <p class="romantic text-center text-3xl mt-2" id="subtitle">Create Your Dream Partner</p>
 
-                <input id="userName" type="text" placeholder="Your Full Name *" class="p-4 border-2 border-pink-200 rounded-2xl" onkeyup="validateStep1()">
-                <input id="userEmail" type="email" placeholder="Your Email *" class="p-4 border-2 border-pink-200 rounded-2xl" onkeyup="validateStep1()">
-                <input id="userAge" type="number" placeholder="Your Age *" min="18" class="p-4 border-2 border-pink-200 rounded-2xl" onkeyup="validateStep1()">
+        <div class="max-w-md mx-auto mt-10 space-y-6">
+            <select id="language" onchange="changeLanguage()" class="w-full p-4 border-2 border-pink-300 rounded-2xl text-lg">
+                <option value="en">English</option>
+                <option value="bn">বাংলা</option>
+                <option value="hi">हिंदी</option>
+            </select>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <button onclick="selectGender(this, 'male')" class="gender-btn p-6 border-2 rounded-3xl text-lg">👨 Male</button>
-                    <button onclick="selectGender(this, 'female')" class="gender-btn p-6 border-2 rounded-3xl text-lg">👩 Female</button>
-                </div>
+            <input id="userName" type="text" class="w-full p-5 border-2 border-pink-200 rounded-2xl" placeholder="Your Name *">
+            <input id="userEmail" type="email" class="w-full p-5 border-2 border-pink-200 rounded-2xl" placeholder="Your Email *">
+            <input id="userAge" type="number" min="18" class="w-full p-5 border-2 border-pink-200 rounded-2xl" placeholder="Your Age *">
 
-                <button id="continueBtn" onclick="goToStep(2)" disabled class="w-full py-6 bg-gradient-to-r from-rose-500 to-pink-600 text-white text-xl font-semibold rounded-3xl">Continue</button>
-            </div>
-        </div>
-
-        <!-- Step 2: Customization -->
-        <div id="step2" class="hidden bg-white rounded-3xl shadow-2xl">
-            <div class="flex border-b text-center">
-                <button onclick="switchTab(0)" id="tab0" class="tab-btn flex-1 py-5 font-medium active">Physical</button>
-                <button onclick="switchTab(1)" id="tab1" class="tab-btn flex-1 py-5 font-medium">Face & Hair</button>
-                <button onclick="switchTab(2)" id="tab2" class="tab-btn flex-1 py-5 font-medium">Mind & Love</button>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="selectGender(this,'male')" class="gender-btn p-6 border-2 rounded-3xl text-xl">👨 Male</button>
+                <button onclick="selectGender(this,'female')" class="gender-btn p-6 border-2 rounded-3xl text-xl">👩 Female</button>
             </div>
 
-            <!-- Physical Tab -->
-            <div id="content0" class="p-10 grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <label class="block mb-2 font-medium">Partner Age</label>
-                    <input id="partnerAge" type="number" value="26" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                </div>
-                <div>
-                    <label class="block mb-2 font-medium">Height</label>
-                    <select id="height" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select Height</option>
-                        <option value="Petite">Petite (Short)</option>
-                        <option value="Average">Average</option>
-                        <option value="Tall">Tall</option>
-                        <option value="Very Tall">Very Tall</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="heightCustom" type="text" placeholder="Write your preference" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-                <div>
-                    <label class="block mb-2 font-medium">Body Type</label>
-                    <select id="bodyType" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select Body</option>
-                        <option value="Slim / Skinny">Slim / Skinny (রোগা)</option>
-                        <option value="Athletic">Athletic</option>
-                        <option value="Curvy">Curvy</option>
-                        <option value="Voluptuous / Thick">Voluptuous / Thick (মোটা)</option>
-                        <option value="Chubby">Chubby</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="bodyCustom" type="text" placeholder="Describe body type" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-                <div>
-                    <label class="block mb-2 font-medium">Skin Tone</label>
-                    <select id="skinTone" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option>Fair</option><option>Light</option><option>Medium</option><option>Olive</option><option>Deep</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Face & Hair Tab -->
-            <div id="content1" class="p-10 hidden grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <label>Face Shape</label>
-                    <select id="faceShape" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select</option>
-                        <option value="Oval">Oval</option>
-                        <option value="Heart">Heart</option>
-                        <option value="Round">Round</option>
-                        <option value="Square">Square</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="faceCustom" type="text" placeholder="Your choice" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-                <div>
-                    <label>Eyes</label>
-                    <select id="eyes" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select</option>
-                        <option value="Big Brown">Big Brown</option>
-                        <option value="Blue">Blue</option>
-                        <option value="Green">Green</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="eyesCustom" type="text" placeholder="Your choice" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-                <div>
-                    <label>Nose</label>
-                    <select id="nose" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select</option>
-                        <option value="Straight">Straight</option>
-                        <option value="Button">Button</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="noseCustom" type="text" placeholder="Your choice" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-                <div>
-                    <label>Lips</label>
-                    <select id="lips" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select</option>
-                        <option value="Full Plump">Full & Plump</option>
-                        <option value="Soft">Soft & Natural</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="lipsCustom" type="text" placeholder="Your choice" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-                <div>
-                    <label>Hair Style</label>
-                    <select id="hairStyle" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select Hair</option>
-                        <option value="Long Wavy">Long Wavy</option>
-                        <option value="Short Curly">Short Curly</option>
-                        <option value="Straight Silky">Straight Silky</option>
-                        <option value="Braided">Braided</option>
-                        <option value="Pixie Cut">Pixie Cut</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="hairCustom" type="text" placeholder="Your hair preference" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-            </div>
-
-            <!-- Mind & Intimacy Tab -->
-            <div id="content2" class="p-10 hidden space-y-8">
-                <div>
-                    <label>Mindset</label>
-                    <select id="mindset" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select</option>
-                        <option value="Highly Understanding">Highly Understanding</option>
-                        <option value="Romantic & Loyal">Romantic & Loyal</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="mindsetCustom" type="text" placeholder="Describe mindset" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-                <div>
-                    <label>Romantic Style</label>
-                    <select id="romantic" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select</option>
-                        <option value="Very Romantic">Very Romantic</option>
-                        <option value="Passionate">Passionate</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="romanticCustom" type="text" placeholder="Describe" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-                <div>
-                    <label>Intimacy Style</label>
-                    <select id="intimacy" onchange="toggleCustom(this)" class="w-full p-4 border-2 border-pink-200 rounded-2xl">
-                        <option value="">Select</option>
-                        <option value="Affectionate">Affectionate & Sensual</option>
-                        <option value="Wild">Wild & Passionate</option>
-                        <option value="Gentle">Gentle & Romantic</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input id="intimacyCustom" type="text" placeholder="Describe intimacy" class="hidden w-full mt-3 p-4 border border-pink-300 rounded-2xl">
-                </div>
-                <textarea id="customNote" rows="4" class="w-full p-5 border-2 border-pink-200 rounded-3xl" placeholder="Any other special requests..."></textarea>
-            </div>
-
-            <div class="p-8 border-t flex justify-between">
-                <button onclick="goToStep(1)" class="px-8 py-4">← Back</button>
-                <button onclick="submitDream()" class="px-12 py-5 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-3xl font-semibold">Manifest My Partner</button>
-            </div>
-        </div>
-
-        <!-- Result -->
-        <div id="step3" class="hidden bg-white rounded-3xl shadow-2xl p-12 text-center">
-            <h2 class="heading text-5xl text-rose-600 mb-6">Your Dream Partner is Ready! 💖</h2>
-            <div id="summary" class="max-w-lg mx-auto bg-pink-50 p-8 rounded-3xl text-left"></div>
-            <button onclick="downloadPDF()" class="mt-10 px-10 py-5 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-3xl">Download PDF</button>
+            <button id="nextBtn" onclick="goToStep(2)" disabled class="w-full py-6 bg-gradient-to-r from-rose-500 to-purple-600 text-white text-xl rounded-3xl font-semibold">Continue</button>
         </div>
     </div>
 
-    <script>
-        let userGender = "";
+    <!-- Other steps (Physical, Face, Mind) -->
+    <div id="step2" class="love-border hidden bg-white rounded-3xl shadow-2xl p-10">
+        <h2 class="heading text-4xl text-center mb-8" id="step2title">Physical Attributes</h2>
+        <!-- Add your fields here with ids for translation -->
+        <div class="flex justify-between mt-10">
+            <button onclick="goToStep(1)" class="px-8 py-4">Back</button>
+            <button onclick="goToStep(3)" class="px-12 py-4 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-3xl">Next</button>
+        </div>
+    </div>
 
-        function selectGender(btn, gender) {
-            document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('border-rose-500'));
-            btn.classList.add('border-rose-500');
-            userGender = gender;
-            validateStep1();
+    <div id="step3" class="love-border hidden bg-white rounded-3xl shadow-2xl p-10">
+        <h2 class="heading text-4xl text-center mb-8" id="step3title">Face & Hair</h2>
+        <div class="flex justify-between mt-10">
+            <button onclick="goToStep(2)" class="px-8 py-4">Back</button>
+            <button onclick="goToStep(4)" class="px-12 py-4 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-3xl">Next</button>
+        </div>
+    </div>
+
+    <div id="step4" class="love-border hidden bg-white rounded-3xl shadow-2xl p-10">
+        <h2 class="heading text-4xl text-center mb-8" id="step4title">Mind & Love</h2>
+        <button onclick="submitForm()" class="w-full py-6 bg-gradient-to-r from-rose-500 to-purple-600 text-white text-xl rounded-3xl">Submit</button>
+    </div>
+
+    <!-- Result -->
+    <div id="result" class="hidden bg-white rounded-3xl shadow-2xl p-12 text-center">
+        <h2 class="heading text-5xl text-rose-600" id="resultTitle">Your Dream Partner is Ready!</h2>
+        <div id="summary" class="mt-8"></div>
+        <button onclick="downloadPDF()" class="mt-10 px-10 py-5 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-3xl">Download PDF</button>
+    </div>
+</div>
+
+<script>
+    const translations = {
+        en: {
+            title: "HeartLink",
+            subtitle: "Create Your Dream Partner",
+            step2title: "Physical Attributes",
+            step3title: "Face & Hair",
+            step4title: "Mind & Love",
+            resultTitle: "Your Dream Partner is Ready!"
+        },
+        bn: {
+            title: "হার্টলিঙ্ক",
+            subtitle: "স্বপ্নের সঙ্গী তৈরি করুন",
+            step2title: "শারীরিক বৈশিষ্ট্য",
+            step3title: "মুখ ও চুল",
+            step4title: "মন ও ভালোবাসা",
+            resultTitle: "আপনার স্বপ্নের সঙ্গী প্রস্তুত!"
+        },
+        hi: {
+            title: "हार्टलिंक",
+            subtitle: "अपना सपनों का साथी बनाएं",
+            step2title: "शारीरिक विशेषताएं",
+            step3title: "चेहरा और बाल",
+            step4title: "मन और प्यार",
+            resultTitle: "आपका सपनों का साथी तैयार है!"
         }
+    };
 
-        function validateStep1() {
-            const name = document.getElementById('userName').value.trim();
-            const email = document.getElementById('userEmail').value.trim();
-            const age = document.getElementById('userAge').value;
-            document.getElementById('continueBtn').disabled = !(name && email && age && userGender);
-        }
+    let currentLang = "en";
+    let userGender = "";
 
-        function goToStep(step) {
-            document.querySelectorAll('#step1,#step2,#step3').forEach(el => el.classList.add('hidden'));
-            document.getElementById('step' + step).classList.remove('hidden');
-        }
+    function changeLanguage() {
+        currentLang = document.getElementById('language').value;
+        const t = translations[currentLang];
+        
+        document.getElementById('title').textContent = t.title;
+        document.getElementById('subtitle').textContent = t.subtitle;
+        document.getElementById('step2title').textContent = t.step2title;
+        document.getElementById('step3title').textContent = t.step3title;
+        document.getElementById('step4title').textContent = t.step4title;
+        document.getElementById('resultTitle').textContent = t.resultTitle;
+    }
 
-        function switchTab(n) {
-            document.querySelectorAll('#content0,#content1,#content2').forEach(el => el.classList.add('hidden'));
-            document.getElementById('content' + n).classList.remove('hidden');
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('tab' + n).classList.add('active');
-        }
+    function selectGender(btn, gender) {
+        document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('border-rose-500'));
+        btn.classList.add('border-rose-500');
+        userGender = gender;
+        validateStep1();
+    }
 
-        function toggleCustom(select) {
-            const id = select.id + 'Custom';
-            const field = document.getElementById(id);
-            if (field) field.classList.toggle('hidden', select.value !== 'custom');
-        }
+    function validateStep1() {
+        const valid = document.getElementById('userName').value && 
+                      document.getElementById('userEmail').value && 
+                      document.getElementById('userAge').value && userGender;
+        document.getElementById('nextBtn').disabled = !valid;
+    }
 
-        function submitDream() {
-            goToStep(3);
-            const partnerType = userGender === 'male' ? 'Girlfriend' : 'Boyfriend';
-            document.getElementById('summary').innerHTML = `
-                <h3 class="text-2xl font-bold mb-6">Your Perfect ${partnerType}</h3>
-                <p><strong>Body Type:</strong> ${document.getElementById('bodyType').value === 'custom' ? document.getElementById('bodyCustom').value : document.getElementById('bodyType').value}</p>
-                <p><strong>Height:</strong> ${document.getElementById('height').value === 'custom' ? document.getElementById('heightCustom').value : document.getElementById('height').value}</p>
-                <p><strong>Hair:</strong> ${document.getElementById('hairStyle').value === 'custom' ? document.getElementById('hairCustom').value : document.getElementById('hairStyle').value}</p>
-                <p><strong>Intimacy:</strong> ${document.getElementById('intimacy').value === 'custom' ? document.getElementById('intimacyCustom').value : document.getElementById('intimacy').value}</p>
-            `;
-        }
+    function goToStep(step) {
+        document.querySelectorAll('#step1,#step2,#step3,#step4,#result').forEach(el => el.classList.add('hidden'));
+        document.getElementById('step' + step).classList.remove('hidden');
+    }
 
-        function downloadPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.text("Dream Partner Profile", 20, 30);
-            doc.save("Dream_Partner.pdf");
-        }
+    function submitForm() {
+        goToStep('result'); // Using string for result
+        document.getElementById('summary').innerHTML = `<p class="text-xl">Thank you! Your partner has been created with love 💕</p>`;
+    }
 
-        window.onload = () => {
-            goToStep(1);
-            switchTab(0);
-        };
-    </script>
+    function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text("Dream Partner", 20, 30);
+        doc.save("Dream_Partner.pdf");
+    }
+
+    window.onload = () => {
+        goToStep(1);
+    };
+</script>
 </body>
 </html>
