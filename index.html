@@ -18,7 +18,16 @@
                         linear-gradient(45deg, #e11d48, #c026d3, #db2777) border-box;
             animation: borderGlow 3s linear infinite;
         }
-        @keyframes borderGlow { 0%,100% {border-color:#e11d48;} 50% {border-color:#c026d3;} }
+        @keyframes borderGlow {
+            0%,100% { border-color: #e11d48; }
+            50% { border-color: #c026d3; }
+        }
+        .rainbow-bg {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb, #ff9a9e);
+            background-size: 400% 400%;
+            animation: rainbow 8s ease infinite;
+        }
+        @keyframes rainbow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
@@ -26,29 +35,44 @@
 <div class="max-w-4xl mx-auto px-4 py-8">
 
     <!-- Step 1: Login -->
-    <div id="step1" class="love-border bg-gradient-to-br from-pink-400 via-purple-500 to-rose-500 text-white rounded-3xl shadow-2xl p-12">
+    <div id="step1" class="love-border rainbow-bg text-white rounded-3xl shadow-2xl p-12">
         <h1 class="heading text-6xl text-center">HeartLink</h1>
         <p class="romantic text-4xl text-center mt-4">Create Your Dream Partner</p>
 
         <div class="max-w-lg mx-auto mt-12 space-y-6">
             <div>
-                <label>Preferred Language</label>
+                <label class="block text-sm mb-1">Preferred Language</label>
                 <select id="language" class="w-full p-4 rounded-2xl bg-white/30 border border-white/50 text-white">
                     <option value="en" selected>English</option>
                     <option value="bn">বাংলা</option>
                     <option value="hi">हिंदी</option>
                 </select>
             </div>
-            <input id="userName" type="text" placeholder="Your Full Name *" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
-            <input id="userEmail" type="email" placeholder="Your Email *" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
-            <input id="userAge" type="number" min="18" placeholder="Your Age *" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900">
 
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="selectGender(this,'male')" class="gender-btn p-8 rounded-3xl bg-white/90 text-gray-900 text-xl">👨 Male</button>
-                <button onclick="selectGender(this,'female')" class="gender-btn p-8 rounded-3xl bg-white/90 text-gray-900 text-xl">👩 Female</button>
+            <div>
+                <label class="block text-sm mb-1">Your Full Name <span class="text-red-300">*</span></label>
+                <input id="userName" type="text" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900" placeholder="Enter your name" aria-required="true">
             </div>
 
-            <button id="next1" onclick="validateAndGo(1,2)" disabled class="w-full py-7 bg-white text-rose-600 text-2xl font-bold rounded-3xl">Continue</button>
+            <div>
+                <label class="block text-sm mb-1">Your Email <span class="text-red-300">*</span></label>
+                <input id="userEmail" type="email" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900" placeholder="you@example.com" aria-required="true">
+            </div>
+
+            <div>
+                <label class="block text-sm mb-1">Your Age <span class="text-red-300">*</span></label>
+                <input id="userAge" type="number" min="18" class="w-full p-5 rounded-2xl bg-white/90 text-gray-900" placeholder="Your age" aria-required="true">
+            </div>
+
+            <div>
+                <label class="block text-sm mb-2">Your Gender <span class="text-red-300">*</span></label>
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="selectGender(this,'male')" class="gender-btn p-8 rounded-3xl bg-white/90 text-gray-900 text-xl" aria-label="Select Male">👨 Male</button>
+                    <button onclick="selectGender(this,'female')" class="gender-btn p-8 rounded-3xl bg-white/90 text-gray-900 text-xl" aria-label="Select Female">👩 Female</button>
+                </div>
+            </div>
+
+            <button id="next1" onclick="validateAndGo(1,2)" class="w-full py-7 bg-white text-rose-600 text-2xl font-bold rounded-3xl">Continue</button>
         </div>
     </div>
 
@@ -58,7 +82,7 @@
         <div class="grid md:grid-cols-2 gap-8">
             <div>
                 <label>Partner Age</label>
-                <input id="pAge" type="number" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                <input id="pAge" type="number" min="18" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
             </div>
             <div>
                 <label>Height</label>
@@ -78,7 +102,7 @@
                     <option value="Slim">Slim</option>
                     <option value="Athletic">Athletic</option>
                     <option value="Curvy">Curvy</option>
-                    <option value="Thick">Thick / Voluptuous</option>
+                    <option value="Thick">Thick</option>
                     <option value="custom">Custom</option>
                 </select>
                 <input id="bodyCustom" type="text" placeholder="Describe body" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
@@ -112,7 +136,7 @@
                     <option value="Round">Round</option>
                     <option value="custom">Custom</option>
                 </select>
-                <input id="faceShapeCustom" type="text" placeholder="Describe face" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                <input id="faceShapeCustom" type="text" placeholder="Describe" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
             </div>
             <div>
                 <label>Eyes</label>
@@ -130,7 +154,7 @@
                 <select id="lips" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
                     <option value="">Select</option>
                     <option value="Full Plump">Full & Plump</option>
-                    <option value="Soft Natural">Soft Natural</option>
+                    <option value="Soft">Soft Natural</option>
                     <option value="custom">Custom</option>
                 </select>
                 <input id="lipsCustom" type="text" placeholder="Describe lips" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
@@ -161,26 +185,24 @@
                 <label>Mindset</label>
                 <select id="mindset" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
                     <option value="">Select</option>
-                    <option value="Highly Understanding">Highly Understanding</option>
+                    <option value="Understanding">Highly Understanding</option>
                     <option value="Romantic">Romantic</option>
-                    <option value="Adventurous">Adventurous</option>
                     <option value="custom">Custom</option>
                 </select>
-                <input id="mindsetCustom" type="text" placeholder="Describe mindset" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                <input id="mindsetCustom" type="text" placeholder="Describe" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
             </div>
             <div>
                 <label>Intimacy Style</label>
                 <select id="intimacy" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
                     <option value="">Select</option>
-                    <option value="Affectionate">Affectionate & Sensual</option>
+                    <option value="Affectionate">Affectionate</option>
                     <option value="Passionate">Passionate</option>
                     <option value="Gentle">Gentle</option>
-                    <option value="Wild">Wild</option>
                     <option value="custom">Custom</option>
                 </select>
-                <input id="intimacyCustom" type="text" placeholder="Describe intimacy" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                <input id="intimacyCustom" type="text" placeholder="Describe" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
             </div>
-            <textarea id="customNote" rows="5" class="w-full p-6 rounded-3xl bg-white/20 border border-white/40 text-white" placeholder="Any other special wishes..."></textarea>
+            <textarea id="customNote" rows="5" class="w-full p-6 rounded-3xl bg-white/20 border border-white/40 text-white" placeholder="Any other wishes..."></textarea>
         </div>
         <button onclick="validateAndSubmit()" class="w-full mt-12 py-7 bg-white text-rose-600 text-2xl font-bold rounded-3xl">Manifest My Partner</button>
     </div>
@@ -211,7 +233,7 @@
     function validateStep(step) {
         if (step === 1) {
             if (!document.getElementById('userName').value || !document.getElementById('userEmail').value || !document.getElementById('userAge').value || !userGender) {
-                alert("Please fill all required fields!");
+                alert("Please fill all required fields in Step 1");
                 return false;
             }
         }
@@ -223,7 +245,7 @@
     }
 
     function validateAndSubmit() {
-        if (validateStep(4)) submitForm();
+        submitForm();
     }
 
     function goToStep(step) {
@@ -234,7 +256,7 @@
     function submitForm() {
         document.getElementById('step4').classList.add('hidden');
         document.getElementById('result').classList.remove('hidden');
-        document.getElementById('summary').innerHTML = `<p class="text-xl">Your dream partner has been successfully created with all your preferences.</p>`;
+        document.getElementById('summary').innerHTML = `<p class="text-xl">All your choices have been saved. Your dream partner is ready!</p>`;
     }
 
     function downloadPDF() {
