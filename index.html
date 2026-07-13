@@ -9,18 +9,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Dancing+Script:wght@700&family=Inter:wght@400;500;600&display=swap');
+        
         body { font-family: 'Inter', sans-serif; }
         .heading { font-family: 'Playfair Display', serif; }
         .romantic { font-family: 'Dancing Script', cursive; }
-        .love-border {
-            border: 34px solid transparent;
-            background: linear-gradient(black, black) padding-box,
-                        linear-gradient(45deg, #e11d48, #c026d3, #db2777) border-box;
-            animation: borderGlow 3s linear infinite;
+
+        .rainbow-border {
+            border: 24px solid transparent; /* আরও মোটা */
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(90deg, 
+                            #ff0000, #ff3300, #ff9900, #ffee00, 
+                            #aaff00, #00ff33, #00ff99, #00ccff, 
+                            #0066ff, #3300ff, #9900ff, #ff00cc) border-box;
+            animation: rainbowGlow 0.5s linear infinite; /* খুব দ্রুত */
         }
-        @keyframes borderGlow {
-            40%,100% { border-color: #e11d48; }
-            70% { border-color: #c026d3; }
+
+        @keyframes rainbowGlow {
+            0%   { border-image-source: linear-gradient(90deg, #ff0000, #ff3300, #ff9900); }
+            10%  { border-image-source: linear-gradient(90deg, #ffee00, #aaff00, #00ff33); }
+            20%  { border-image-source: linear-gradient(90deg, #00ff99, #00ccff, #0066ff); }
+            30%  { border-image-source: linear-gradient(90deg, #3300ff, #9900ff, #ff00cc); }
+            40%  { border-image-source: linear-gradient(90deg, #ff0000, #ff3300, #ff9900); }
+            50%  { border-image-source: linear-gradient(90deg, #ffee00, #aaff00, #00ff33); }
+            60%  { border-image-source: linear-gradient(90deg, #00ff99, #00ccff, #0066ff); }
+            70%  { border-image-source: linear-gradient(90deg, #3300ff, #9900ff, #ff00cc); }
+            80%  { border-image-source: linear-gradient(90deg, #ff0000, #ff3300, #ff9900); }
+            90%  { border-image-source: linear-gradient(90deg, #ffee00, #aaff00, #00ff33); }
+            100% { border-image-source: linear-gradient(90deg, #00ff99, #00ccff, #0066ff); }
+        }
+
+        .rainbow-content {
+            background: linear-gradient(135deg, 
+                #ff0000, #ff5500, #ffee00, #aaff00, 
+                #00ff55, #00ffcc, #00aaff, #4400ff, 
+                #aa00ff, #ff00aa);
+            background-size: 600% 600%;
+            animation: rainbowShift 2s linear infinite;
+        }
+
+        @keyframes rainbowShift {
+            0%   { background-position: 0% 50%; }
+            25%  { background-position: 100% 0%; }
+            50%  { background-position: 100% 100%; }
+            75%  { background-position: 0% 100%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
@@ -28,10 +60,10 @@
 
 <div class="max-w-4xl mx-auto px-4 py-8">
 
-    <!-- Step 1 -->
-    <div id="step1" class="love-border rainbow-bg rounded-3xl shadow-2xl p-12 text-white">
-        <h1 class="heading text-6xl text-center">HeartLink</h1>
-        <p class="romantic text-4xl text-center mt-4">Create Your Dream Partner</p>
+    <!-- Step 1: Login -->
+    <div id="step1" class="rainbow-border rainbow-content rounded-3xl shadow-2xl p-12 text-white">
+        <h1 class="heading text-6xl text-center drop-shadow-lg">HeartLink</h1>
+        <p class="romantic text-4xl text-center mt-4 drop-shadow">Create Your Dream Partner</p>
 
         <div class="max-w-lg mx-auto mt-12 space-y-6">
             <select id="language" class="w-full p-4 rounded-2xl bg-white/30 border border-white/50 text-white">
@@ -54,14 +86,43 @@
         </div>
     </div>
 
-    <!-- Step 2: Physical -->
+    <!-- Step 2 -->
     <div id="step2" class="love-border hidden bg-gradient-to-br from-rose-700 to-pink-700 text-white rounded-3xl shadow-2xl p-12">
         <h2 class="heading text-4xl text-center mb-10">Physical Attributes</h2>
         <div class="grid md:grid-cols-2 gap-8">
             <div><label>Partner Age</label><input id="pAge" type="number" min="18" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"></div>
-            <div><label>Height</label><select id="height" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Short</option><option>Average</option><option>Tall</option></select></div>
-            <div><label>Body Type</label><select id="body" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Slim</option><option>Curvy</option><option>Athletic</option><option>Thick</option></select></div>
-            <div><label>Skin Tone</label><select id="skin" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Fair</option><option>Medium</option><option>Deep</option></select></div>
+            <div>
+                <label>Height</label>
+                <select id="height" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                    <option value="">Select</option>
+                    <option value="Petite">Petite</option>
+                    <option value="Average">Average</option>
+                    <option value="Tall">Tall</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input id="heightCustom" type="text" placeholder="Describe height" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+            </div>
+            <div>
+                <label>Body Type</label>
+                <select id="body" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                    <option value="">Select</option>
+                    <option value="Slim">Slim</option>
+                    <option value="Athletic">Athletic</option>
+                    <option value="Curvy">Curvy</option>
+                    <option value="Thick">Thick</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input id="bodyCustom" type="text" placeholder="Describe body" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+            </div>
+            <div>
+                <label>Skin Tone</label>
+                <select id="skin" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                    <option value="">Select</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Deep">Deep</option>
+                </select>
+            </div>
         </div>
         <div class="flex justify-between mt-12">
             <button onclick="goToStep(1)" class="px-10 py-4 bg-white/30 rounded-2xl">Back</button>
@@ -69,13 +130,53 @@
         </div>
     </div>
 
-    <!-- Step 3: Face & Hair -->
+    <!-- Step 3 -->
     <div id="step3" class="love-border hidden bg-gradient-to-br from-purple-700 to-violet-700 text-white rounded-3xl shadow-2xl p-12">
         <h2 class="heading text-4xl text-center mb-10">Face & Hair</h2>
         <div class="grid md:grid-cols-2 gap-8">
-            <div><label>Eyes</label><select id="eyes" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Brown</option><option>Blue</option><option>Green</option></select></div>
-            <div><label>Lips</label><select id="lips" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Full</option><option>Soft</option></select></div>
-            <div><label>Hair Style</label><select id="hair" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white"><option value="">Select</option><option>Long Wavy</option><option>Curly</option><option>Straight</option></select></div>
+            <div>
+                <label>Face Shape</label>
+                <select id="faceShape" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                    <option value="">Select</option>
+                    <option value="Oval">Oval</option>
+                    <option value="Heart">Heart</option>
+                    <option value="Round">Round</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input id="faceShapeCustom" type="text" placeholder="Describe" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+            </div>
+            <div>
+                <label>Eyes</label>
+                <select id="eyes" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                    <option value="">Select</option>
+                    <option value="Big Brown">Big Brown</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input id="eyesCustom" type="text" placeholder="Describe eyes" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+            </div>
+            <div>
+                <label>Lips</label>
+                <select id="lips" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                    <option value="">Select</option>
+                    <option value="Full Plump">Full & Plump</option>
+                    <option value="Soft">Soft Natural</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input id="lipsCustom" type="text" placeholder="Describe lips" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+            </div>
+            <div>
+                <label>Hair Style</label>
+                <select id="hair" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                    <option value="">Select</option>
+                    <option value="Long Wavy">Long Wavy</option>
+                    <option value="Curly">Curly</option>
+                    <option value="Straight">Straight</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input id="hairCustom" type="text" placeholder="Describe hair" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+            </div>
         </div>
         <div class="flex justify-between mt-12">
             <button onclick="goToStep(2)" class="px-10 py-4 bg-white/30 rounded-2xl">Back</button>
@@ -83,42 +184,34 @@
         </div>
     </div>
 
-    <!-- Step 4: Detailed Personality & Intimacy -->
+    <!-- Step 4 -->
     <div id="step4" class="love-border hidden bg-gradient-to-br from-pink-600 to-rose-600 text-white rounded-3xl shadow-2xl p-12">
-        <h2 class="heading text-4xl text-center mb-10">Personality, Love & Intimacy</h2>
+        <h2 class="heading text-4xl text-center mb-10">Personality & Intimacy</h2>
         <div class="space-y-8">
             <div>
-                <label>Overall Personality</label>
-                <select id="personality" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                <label>Mindset</label>
+                <select id="mindset" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
                     <option value="">Select</option>
-                    <option value="Romantic & Caring">Romantic & Caring</option>
-                    <option value="Playful & Adventurous">Playful & Adventurous</option>
-                    <option value="Calm & Supportive">Calm & Supportive</option>
-                    <option value="Passionate & Bold">Passionate & Bold</option>
+                    <option value="Highly Understanding">Highly Understanding</option>
+                    <option value="Romantic">Romantic</option>
+                    <option value="Adventurous">Adventurous</option>
+                    <option value="custom">Custom</option>
                 </select>
+                <input id="mindsetCustom" type="text" placeholder="Describe" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
             </div>
             <div>
-                <label>Love Language</label>
-                <select id="loveLanguage" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
+                <label>Intimacy Style</label>
+                <select id="intimacy" onchange="toggleCustom(this)" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
                     <option value="">Select</option>
-                    <option value="Physical Touch">Physical Touch</option>
-                    <option value="Words of Affirmation">Words of Affirmation</option>
-                    <option value="Quality Time">Quality Time</option>
-                    <option value="Gifts">Gifts</option>
+                    <option value="Affectionate">Affectionate</option>
+                    <option value="Passionate">Passionate</option>
+                    <option value="Gentle">Gentle</option>
+                    <option value="Wild">Wild</option>
+                    <option value="custom">Custom</option>
                 </select>
+                <input id="intimacyCustom" type="text" placeholder="Describe" class="hidden w-full mt-3 p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
             </div>
-            <div>
-                <label>Behavior During Intimacy</label>
-                <select id="intimacy" class="w-full p-4 rounded-2xl bg-white/20 border border-white/40 text-white">
-                    <option value="">Select</option>
-                    <option value="Very Affectionate">Very Affectionate & Sensual</option>
-                    <option value="Passionate">Passionate & Intense</option>
-                    <option value="Gentle">Gentle & Romantic</option>
-                    <option value="Wild">Wild & Playful</option>
-                    <option value="Attentive">Attentive to Partner's Pleasure</option>
-                </select>
-            </div>
-            <textarea id="customNote" rows="5" class="w-full p-6 rounded-3xl bg-white/20 border border-white/40 text-white" placeholder="Any other special wishes or preferences..."></textarea>
+            <textarea id="customNote" rows="5" class="w-full p-6 rounded-3xl bg-white/20 border border-white/40 text-white" placeholder="Any other wishes..."></textarea>
         </div>
         <button onclick="submitForm()" class="w-full mt-12 py-7 bg-white text-rose-600 text-2xl font-bold rounded-3xl">Manifest My Partner</button>
     </div>
@@ -140,6 +233,12 @@
         document.getElementById('next1').disabled = !(name && email && age && gender);
     }
 
+    function toggleCustom(select) {
+        const customId = select.id + 'Custom';
+        const field = document.getElementById(customId);
+        if (field) field.classList.toggle('hidden', select.value !== 'custom');
+    }
+
     function goToStep(step) {
         document.querySelectorAll('#step1,#step2,#step3,#step4,#result').forEach(el => el.classList.add('hidden'));
         document.getElementById('step' + step).classList.remove('hidden');
@@ -148,17 +247,13 @@
     function submitForm() {
         document.getElementById('step4').classList.add('hidden');
         document.getElementById('result').classList.remove('hidden');
-
-        const partnerType = document.getElementById('userGender').value === 'male' ? 'Girlfriend' : 'Boyfriend';
-
         document.getElementById('summary').innerHTML = `
-            <h3 class="text-2xl font-bold mb-6">Your Dream ${partnerType}</h3>
-            <p><strong>Your Name:</strong> ${document.getElementById('userName').value}</p>
-            <p><strong>Partner Type:</strong> ${partnerType}</p>
-            <p><strong>Personality:</strong> ${document.getElementById('personality').value || 'Not specified'}</p>
-            <p><strong>Love Language:</strong> ${document.getElementById('loveLanguage').value || 'Not specified'}</p>
-            <p><strong>Intimacy Style:</strong> ${document.getElementById('intimacy').value || 'Not specified'}</p>
-            <p class="mt-6 italic">"${document.getElementById('customNote').value || 'A perfect connection built with love 💕'}"</p>
+            <h3 class="text-2xl font-bold mb-6">Your Dream Partner Summary</h3>
+            <p><strong>Name:</strong> ${document.getElementById('userName').value}</p>
+            <p><strong>Partner Age:</strong> ${document.getElementById('pAge').value || 'Not specified'}</p>
+            <p><strong>Body:</strong> ${document.getElementById('body').value || 'Not specified'}</p>
+            <p><strong>Eyes:</strong> ${document.getElementById('eyes').value || 'Not specified'}</p>
+            <p><strong>Hair:</strong> ${document.getElementById('hair').value || 'Not specified'}</p>
         `;
     }
 
